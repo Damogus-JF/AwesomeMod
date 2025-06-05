@@ -84,9 +84,7 @@ SMODS.Joker {
                     func = function ()
                         card:juice_up(0.8,0.8)
                         if #G.consumeables.cards + 1 <= G.consumeables.config.card_limit then
-                            local card = create_card('Spectral',G.consumeables, nil, nil, nil, nil, nil, 'sixth')
-                            card:add_to_deck()
-                            G.consumeables:emplace(card)
+                            local card = SMODS.add_card{set = 'Spectral'}
                         end
                         return true
                     end
@@ -99,6 +97,41 @@ SMODS.Joker {
                 return {
                     message = 'Nothing ever happens...',
                     colour = G.C.CHIPS
+                }
+            end
+        end
+    end
+}
+SMODS.Joker {
+    key = 'Jeffy',
+    loc_txt = {
+        name = 'Jeffy',
+        text = {
+            'If game speed is at 0.5',
+            'this joker gives {X:mult,C:white}X#1#{} mult'
+        }
+    },
+    atlas = 'AwesomeAtlas', pos = { x = 0, y = 1},
+    config = { extra = { Xmult = 4 } },
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = { card.ability.extra.Xmult }
+        } 
+    end,
+    rarity = 1,
+    cost = 4,
+    calculate = function (self, card, context)
+        if context.joker_main then
+            if G.SETTINGS.GAMESPEED == 0.5 then
+                return{ 
+                    Xmult_mod = card.ability.extra.Xmult,
+                    message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult } }
+                }
+            else
+                return {
+                    message = 'Why?',
+                    colour = G.C.YELLOW,
+                    sound = 'Aw_JeffyWhy'
                 }
             end
         end
