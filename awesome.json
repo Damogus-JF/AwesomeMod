@@ -1,0 +1,14 @@
+{
+	"id": "awesome",
+	"name": "AwesomeMod",
+	"display_name": "Awesome Mod",
+	"author": ["Jacob F, Caden F, Balatro discord"],
+	"description": "Awesome sauce",
+	"prefix": "Aw",
+	"main_file": "awesome.lua",
+	"priority": 0,
+	"badge_colour": "12c7db",
+	"badge_text_colour": "ffffff",
+	"version": "1.0.0",
+	"dependencies": ["Steamodded (>=1.*)"]
+}
