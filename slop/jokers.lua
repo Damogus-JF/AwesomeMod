@@ -11,7 +11,7 @@ SMODS.Joker {
         name = 'White Monster',
         text = {
             '{X:mult,C:white}X#1#{} mult {}',
-            'Decreases by {X:mult,C:white}X#2#{} mult {} at the end of round'
+            'Decreases by {X:mult,C:white}X#2#{} mult{} at the end of round'
         }
     },
     atlas = 'AwesomeAtlas', pos = { x = 0, y = 0},
@@ -135,5 +135,89 @@ SMODS.Joker {
                 }
             end
         end
+    end
+}
+SMODS.Joker {
+    key = 'RussianRoulette',
+    loc_txt = {
+        name = 'Russian Roulette',
+        text = {
+            '{X:mult,C:white}X#1#{} mult',
+            '{C:attention}#2# in #3#{} chance to convert score into negative mult'
+        }
+    },
+    atlas = 'AwesomeAtlas', pos = {x=2, y=1},
+    config = { extra = {Xmult = 2, odds = 6, NegXmult = -2} },
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {card.ability.extra.Xmult, (G.GAME.probabilities.normal or 1), card.ability.extra.odds, card.ability.extra.NegXmult}
+        }
+    end,
+    rarity = 1,
+    cost = 6,
+    calculate = function (self, card, context)
+        if context.joker_main then
+            if pseudorandom('RussianRoulette') < G.GAME.probabilities.normal / card.ability.extra.odds then
+                G.E_MANAGER:add_event(Event({
+                func = function()
+                    card:juice_up(0.3,0.4)
+                    return true
+                end
+                }))
+                return{ 
+                    Xmult_mod = card.ability.extra.NegXmult,
+                    message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.NegXmult } }
+                }
+            else
+                G.E_MANAGER:add_event(Event({
+                func = function()
+                    card:juice_up(0.3,0.4)
+                    return true
+                end
+                }))
+                return{ 
+                    Xmult_mod = card.ability.extra.Xmult,
+                    message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult } }
+                }
+            end
+        end
+    end
+}
+SMODS.Joker {
+    key = 'Job',
+    loc_txt = {
+        name = 'J*b application',
+        text = {
+            '{X:mult,C:white}X#1#{} mult per interest last round',
+            'Sets interest to 0'
+        }
+    },
+    atlas = 'AwesomeAtlas', pos = {x=1, y=1},
+    config = { extra = {Xmult = 1, Gain = 0.1, incomelastround = 0} },
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {card.ability.extra.Xmult, card.ability.extra.Gain, card.ability.extra.incomelastround}
+        }
+    end,
+    rarity = 2,
+    cost = 6,
+    calculate = function (self, card, context)
+        if context.joker_main then
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                card:juice_up(0.3,0.4)
+                return true
+            end
+            }))
+            return{ 
+                Xmult_mod = card.ability.extra.NegXmult,
+                message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult } }
+            }
+        end
+    end,
+    calc_dollar_bonus = function (self, card)
+        card.ability.extra.Xmult = 1 + card.ability.extra.Gain * card.ability.extra.incomelastround
+        card.ability.extra.incomelastround = 1 * G.GAME.interest_cap
+        G.GAME.interest_amount = 0
     end
 }
