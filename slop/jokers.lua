@@ -188,12 +188,13 @@ SMODS.Joker {
     loc_txt = {
         name = 'J*b application',
         text = {
-            '{X:mult,C:white}X#1#{} mult per interest last round',
-            'Sets interest to 0'
+            '{X:mult,C:white}X#2#{} mult per {C:money}$1{} of interest cap + {X:mult,C:white}X1{}',
+            'Sets interest to 0',
+            'Currently {X:mult,C:white}X#1#{} mult'
         }
     },
     atlas = 'AwesomeAtlas', pos = {x=1, y=1},
-    config = { extra = {Xmult = 1, Gain = 0.1, incomelastround = 0} },
+    config = { extra = {Xmult = 1, Gain = 0.2, incomelastround = 0} },
     loc_vars = function (self, info_queue, card)
         return {
             vars = {card.ability.extra.Xmult, card.ability.extra.Gain, card.ability.extra.incomelastround}
@@ -210,14 +211,14 @@ SMODS.Joker {
             end
             }))
             return{ 
-                Xmult_mod = card.ability.extra.NegXmult,
+                Xmult_mod = card.ability.extra.Xmult,
                 message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult } }
             }
         end
     end,
     calc_dollar_bonus = function (self, card)
         card.ability.extra.Xmult = 1 + card.ability.extra.Gain * card.ability.extra.incomelastround
-        card.ability.extra.incomelastround = 1 * G.GAME.interest_cap
+        card.ability.extra.incomelastround = 1 * (G.GAME.interest_cap / 5)
         G.GAME.interest_amount = 0
     end
 }
