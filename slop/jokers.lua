@@ -119,7 +119,7 @@ SMODS.Joker {
         } 
     end,
     rarity = 1,
-    cost = 4,
+    cost = 1,
     calculate = function (self, card, context)
         if context.joker_main then
             if G.SETTINGS.GAMESPEED == 0.5 then
@@ -220,5 +220,40 @@ SMODS.Joker {
         card.ability.extra.Xmult = 1 + card.ability.extra.Gain * card.ability.extra.incomelastround
         card.ability.extra.incomelastround = 1 * (G.GAME.interest_cap / 5)
         G.GAME.interest_amount = 0
+    end
+}
+SMODS.Joker {
+    key = 'BearFive',
+    loc_txt = {
+        name = 'Bear5',
+        text = {
+            'Whenever a five is scored',
+            '{C:chips}X#1#{} Chips'
+        }
+    },
+    atlas = 'AwesomeAtlas', pos = {x=3, y=1},
+    config = { extra = { XChips = 1.5}},
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {card.ability.extra.XChips}
+        }
+    end,
+    rarity = 3,
+    cost = 5,
+    calculate = function (self, card, context)
+        if context.individual and context.cardarea == G.play then
+            if context.other_card:get_id() == 5 then
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        card:juice_up(0.3,0.4)
+                        return true
+                    end
+                }))
+                return{ 
+                    Xchip_mod = card.ability.extra.XChips,
+                    message = localize { type = 'variable', key = 'a_xchips', vars = { card.ability.extra.XChips } }
+                }
+        end
+        end
     end
 }
