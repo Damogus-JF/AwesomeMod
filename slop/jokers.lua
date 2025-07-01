@@ -227,33 +227,54 @@ SMODS.Joker {
     loc_txt = {
         name = 'Bear5',
         text = {
-            'Whenever a five is scored',
-            '{C:chips}X#1#{} Chips'
+            'Whenever a five is scored ',
+            'this gets {C:mult}+#2#{} Mult',
+            '{X:mult,C:white}X#3#{} to current mult',
+            'When a {C:chips}five of clubs{} is scored',
+            'Currently {C:mult}+#1#{} Mult'
         }
     },
     atlas = 'AwesomeAtlas', pos = {x=3, y=1},
-    config = { extra = { XChips = 1.5}},
+    config = { extra = { Mult = 5,BaseMultGain = 2, BaseXMultGain = 2}},
     loc_vars = function (self, info_queue, card)
         return {
-            vars = {card.ability.extra.XChips}
+            vars = {card.ability.extra.Mult,card.ability.extra.BaseMultGain,card.ability.extra.BaseXMultGain }
         }
     end,
-    rarity = 3,
+    blueprint_compat = true,
+    rarity = 2,
     cost = 5,
     calculate = function (self, card, context)
-        if context.individual and context.cardarea == G.play then
+        if context.individual and context.cardarea == G.play and not context.blueprint then
             if context.other_card:get_id() == 5 then
+                
                 G.E_MANAGER:add_event(Event({
                     func = function()
                         card:juice_up(0.3,0.4)
+                        card.ability.extra.Mult = card.ability.extra.Mult + card.ability.extra.BaseMultGain
                         return true
                     end
                 }))
-                return{ 
-                    Xchip_mod = card.ability.extra.XChips,
-                    message = localize { type = 'variable', key = 'a_xchips', vars = { card.ability.extra.XChips } }
-                }
+                if context.other_card:is_suit("Clubs") then
+                    
+                    card.ability.extra.Mult = card.ability.extra.Mult * card.ability.extra.BaseXMultGain
+                    G.E_MANAGER:add_event(Event({
+                        trigger = 'After',
+                        delay = 0.4,
+                    func = function()
+                        SMODS.destroy_cards(context.other_card)
+                        return true
+                    end
+                }))
+            end
+            end
+            
         end
+        if context.joker_main then 
+            return{ 
+                    mult = card.ability.extra.Mult,
+                    message = localize { type = 'variable', key = 'a_mult', vars = { card.ability.extra.Mult } }
+            }
         end
     end
 }
