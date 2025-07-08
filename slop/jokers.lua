@@ -10,7 +10,7 @@ SMODS.Joker {
     loc_txt = {
         name = 'White Monster',
         text = {
-            '{X:mult,C:white}X#1#{} mult {}',
+            '{X:mult,C:white}X#1#{} Mult {}',
             'Decreases by {X:mult,C:white}X#2#{} Mult{}',
             'after you play a hand',
         }
@@ -34,7 +34,7 @@ SMODS.Joker {
                 message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult } }
             }
         end
-        if context.after and context.cardarea == G.play and not context.repetition and not context.blueprint then
+        if context.after and context.main_eval == G.play and not context.repetition and not context.blueprint then
             card.ability.extra.Xmult = card.ability.extra.Xmult - card.ability.extra.NegXmult
             card:juice_up(0.8, 0.8)
             return {
@@ -43,12 +43,26 @@ SMODS.Joker {
             }
         end
         if card.ability.extra.Xmult <= 1 then
-            SMODS.destroy_cards(card)
+            G.E_MANAGER:add_event(Event({
+                trigger = 'After',
+                delay = 0.4,
+                func = function()
+                    SMODS.destroy_cards(card)
+                    return true
+                end
+            }))
             return {
                 message = 'Empty!',
                 colour = G.C.CHIPS
             }
-            
+            else
+                card.ability.extra.Xmult = card.ability.extra.Xmult - card.ability.extra.NegXmult
+                card:juice_up(0.8, 0.8)
+                return {
+                    message = 'Sluuurp!',
+                    colour = G.C.MULT
+                }
+
         end
     end
 }
