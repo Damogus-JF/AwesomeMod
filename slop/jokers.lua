@@ -11,7 +11,8 @@ SMODS.Joker {
         name = 'White Monster',
         text = {
             '{X:mult,C:white}X#1#{} Mult {}',
-            'Decreases by {X:mult,C:white}X#2#{} Mult{} at the end of round'
+            'Decreases by {X:mult,C:white}X#2#{} Mult{}',
+            'at the end of round',
         }
     },
     atlas = 'AwesomeAtlas', pos = { x = 0, y = 0},
