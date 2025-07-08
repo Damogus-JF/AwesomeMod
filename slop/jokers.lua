@@ -33,7 +33,7 @@ SMODS.Joker {
                 message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult } }
             }
         end
-        if context.after and context.game_over == false and not context.repetition and not context.blueprint then
+        if context.after and context.cardarea == G.play and not context.repetition and not context.blueprint then
             card.ability.extra.Xmult = card.ability.extra.Xmult - card.ability.extra.NegXmult
             card:juice_up(0.8, 0.8)
             return {
