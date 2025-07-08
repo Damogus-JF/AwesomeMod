@@ -10,8 +10,8 @@ SMODS.Joker {
     loc_txt = {
         name = 'White Monster',
         text = {
-            '{X:mult,C:white}X#1#{} mult {}',
-            'Decreases by {X:mult,C:white}X#2#{} mult{} at the end of round'
+            '{X:mult,C:white}X#1#{} Mult {}',
+            'Decreases by {X:mult,C:white}X#2#{} Mult{} at the end of round'
         }
     },
     atlas = 'AwesomeAtlas', pos = { x = 0, y = 0},
