@@ -23,7 +23,7 @@ SMODS.Joker {
     end,
     rarity = 2,
     cost = 7,
-    blueprint_compat = false,
+    blueprint_compat = true,
     eternal_compat = false,
     perishable_compat = true,
     calculate = function(self, card, context)
@@ -33,7 +33,7 @@ SMODS.Joker {
                 message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult } }
             }
         end
-        if context.end_of_round and context.game_over == false and not context.repetition and not context.blueprint then
+        if context.after and context.game_over == false and not context.repetition and not context.blueprint then
             card.ability.extra.Xmult = card.ability.extra.Xmult - card.ability.extra.NegXmult
             card:juice_up(0.8, 0.8)
             return {
