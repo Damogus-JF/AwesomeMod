@@ -11,7 +11,7 @@ SMODS.Joker {
         name = 'White Monster',
         text = {
             '{X:mult,C:white}X#1#{} mult {}',
-            'Decreases by {X:mult,C:white}X#2#{} mult{} at the end of round'
+            'Decreases by {X:mult,C:white}X#2#{} mult{} after you play a hand'
         }
     },
     atlas = 'AwesomeAtlas', pos = { x = 0, y = 0},
@@ -71,6 +71,7 @@ SMODS.Joker {
     end,
     rarity = 3,
     cost = 8,
+    blueprint_compat = false,
     calculate = function (self, card, context)
         if context.end_of_round and context.game_over == false and not context.repetition then
             local mypos = nil
