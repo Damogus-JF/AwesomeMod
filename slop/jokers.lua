@@ -229,7 +229,8 @@ SMODS.Joker {
         text = {
             'Whenever a five is scored ',
             'this gets {C:mult}+#2#{} Mult',
-            '{X:mult,C:white}X#3#{} to current mult',
+            '{X:mult,C:white}X#3#{} to current mult', 
+            'and destroy the played card',
             'When a {C:chips}five of clubs{} is scored',
             'Currently {C:mult}+#1#{} Mult'
         }
