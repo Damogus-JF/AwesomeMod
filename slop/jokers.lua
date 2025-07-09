@@ -107,8 +107,9 @@ SMODS.Joker {
     loc_txt = {
         name = 'Jeffy',
         text = {
-            'If game speed is at 0.5',
-            'this joker gives {X:mult,C:white}X#1#{} mult'
+            
+            '{X:mult,C:white}X#1#{} Mult{} while',
+            'Game speed is at 0.5',
         }
     },
     atlas = 'AwesomeAtlas', pos = { x = 0, y = 1},
@@ -188,9 +189,9 @@ SMODS.Joker {
     loc_txt = {
         name = 'J*b application',
         text = {
-            '{X:mult,C:white}X#2#{} mult per {C:money}$1{} of interest cap + {X:mult,C:white}X1{}',
-            'Sets interest to 0',
-            'Currently {X:mult,C:white}X#1#{} mult'
+            '{X:mult,C:white}X#2#{} Mult per {C:money}$5{} + {X:mult,C:white}X1{}',
+            'You gain no interest at the end of round',
+            'Currently {X:mult,C:white}X#1#{} Mult',
         }
     },
     atlas = 'AwesomeAtlas', pos = {x=1, y=1},
@@ -229,7 +230,7 @@ SMODS.Joker {
         text = {
             'Whenever a five is scored ',
             'this gets {C:mult}+#2#{} Mult',
-            '{X:mult,C:white}X#3#{} to current mult', 
+            '{X:mult,C:white}X#3#{} to current Mult', 
             'and destroy the played card',
             'When a {C:chips}five of clubs{} is scored',
             'Currently {C:mult}+#1#{} Mult'
