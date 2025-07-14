@@ -11,8 +11,7 @@ SMODS.Joker {
         name = 'White Monster',
         text = {
             '{X:mult,C:white}X#1#{} Mult {}',
-            'Decreases by {X:mult,C:white}X#2#{} Mult{}',
-            'at the end of round',
+            '{X:mult,C:white}-X0.5{} Mult{} for every played hand',
         }
     },
     atlas = 'AwesomeAtlas', pos = { x = 0, y = 0},
@@ -37,7 +36,7 @@ SMODS.Joker {
         if context.after and context.main_eval == true and not context.repetition and not context.blueprint then
             card.ability.extra.Xmult = card.ability.extra.Xmult - card.ability.extra.NegXmult
             return {
-                message = 'Sluuurp!',
+                message = '{X:mult,C:white}-X0.5{}',
                 colour = G.C.MULT
             }
         end
