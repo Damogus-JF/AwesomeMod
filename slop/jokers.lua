@@ -11,7 +11,7 @@ SMODS.Joker {
         name = 'White Monster',
         text = {
             '{X:mult,C:white}X#1#{} Mult {}',
-            '{X:mult,C:white}-X0.5{} Mult{} for every played hand',
+            '{X:mult,C:white}X0.5{} Mult{} for every played hand',
         }
     },
     atlas = 'AwesomeAtlas', pos = { x = 0, y = 0},
@@ -36,15 +36,15 @@ SMODS.Joker {
         if context.after and context.main_eval == true and not context.repetition and not context.blueprint then
             card.ability.extra.Xmult = card.ability.extra.Xmult - card.ability.extra.NegXmult
             return {
-                message = '{X:mult,C:white}-X0.5{}',
-                colour = G.C.MULT
+                message = localize{type = 'variable', key = 'a_negxmult', vars = { card.ability.extra.NegXmult } },
+                colour = G.C.RED
             }
         end
         if card.ability.extra.Xmult <= 1 then
             SMODS.destroy_cards(card)
             return {
                 message = 'Empty!',
-                colour = G.C.CHIPS
+                colour = G.C.FILTER
             }
             
         end
