@@ -11,7 +11,8 @@ SMODS.Joker {
         name = 'White Monster',
         text = {
             '{X:mult,C:white}X#1#{} Mult {}',
-            '{X:mult,C:white}X0.5{} Mult{} for every played hand',
+            'loses {X:mult,C:white}X0.5{} Mult{}',
+            'for every played hand',
         }
     },
     atlas = 'AwesomeAtlas', pos = { x = 0, y = 0},
@@ -39,7 +40,8 @@ SMODS.Joker {
                 message = localize{type = 'variable', key = 'a_xmult_minus', vars = { card.ability.extra.NegXmult } },
                 colour = G.C.RED
             }
-        else
+        end
+        if card.ability.extra.Xmult <= 1 then
             SMODS.destroy_cards(card)
             return {
                 message = 'Empty!',
