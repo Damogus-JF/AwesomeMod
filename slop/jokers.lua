@@ -12,7 +12,7 @@ SMODS.Joker {
         text = {
             '{X:mult,C:white}X#1#{} Mult {}',
             'loses {X:mult,C:white}X0.5{} Mult{}',
-            'for every played hand',
+            'for every hand played',
         }
     },
     atlas = 'AwesomeAtlas', pos = { x = 0, y = 0},
@@ -41,7 +41,7 @@ SMODS.Joker {
                 colour = G.C.RED
             }
         end
-        if card.ability.extra.Xmult <= 1 then
+        if card.ability.extra.Xmult <= 1 and not context.blueprint then
             SMODS.destroy_cards(card)
             return {
                 message = 'Empty!',
@@ -57,9 +57,9 @@ SMODS.Joker {
     loc_txt = {
         name = 'Chud',
         text = {
-            'Destroy the joker to the right of this',
-            'at the end of round and create',
-            'a {C:spectral}spectral{} card'
+            'Destroy Joker to the right',
+            'and create a {C:spectral}spectral{} card',
+            'at end of round',
         }
     },
     atlas = 'AwesomeAtlas', pos = { x = 2, y = 0},
@@ -109,7 +109,7 @@ SMODS.Joker {
         text = {
             
             '{X:mult,C:white}X#1#{} Mult{} while',
-            'Game speed is at 0.5',
+            'game speed is at 0.5',
         }
     },
     atlas = 'AwesomeAtlas', pos = { x = 0, y = 1},
@@ -143,8 +143,9 @@ SMODS.Joker {
     loc_txt = {
         name = 'Russian Roulette',
         text = {
-            '{X:mult,C:white}X#1#{} mult',
-            '{C:attention}#2# in #3#{} chance to convert score into negative mult'
+            '{X:mult,C:white}X#1#{} Mult',
+            '{C:green}#2# in #3#{} chance for played hand',
+            'to subtract from your score',
         }
     },
     atlas = 'AwesomeAtlas', pos = {x=2, y=1},
@@ -189,9 +190,9 @@ SMODS.Joker {
     loc_txt = {
         name = 'J*b application',
         text = {
-            '{X:mult,C:white}X#2#{} Mult per {C:money}$5{} + {X:mult,C:white}X1{}',
-            'You gain no interest at the end of round',
-            'Currently {X:mult,C:white}X#1#{} Mult',
+            '{X:mult,C:white}X#2#{} Mult for every {C:money}$5{}',
+            'Earn no {C:money}interest{} at end of round',
+            '{C:inactive}(Currently {X:mult,C:white}X#1#{} {C:inactive}Mult){}',
         }
     },
     atlas = 'AwesomeAtlas', pos = {x=1, y=1},
@@ -228,12 +229,11 @@ SMODS.Joker {
     loc_txt = {
         name = 'Bear5',
         text = {
-            'Whenever a five is scored ',
-            'this gets {C:mult}+#2#{} Mult',
-            '{X:mult,C:white}X#3#{} to current Mult', 
-            'and destroy the played card',
-            'When a {C:chips}five of clubs{} is scored',
-            'Currently {C:mult}+#1#{} Mult'
+            'This Joker gains {C:mult}+#2#{} Mult{}',
+            'when each played {C:attention}5{} is scored', 
+            'if a {C:clubs}5 of Clubs{} scores,',
+            'destroy it and double current {C:mult}Mult{}',
+            '{C:inactive}(Currently {C:mult}+#1#{} {C:inactive}Mult){}',
         }
     },
     atlas = 'AwesomeAtlas', pos = {x=3, y=1},
@@ -257,8 +257,7 @@ SMODS.Joker {
                         return true
                     end
                 }))
-                if context.other_card:is_suit("Clubs") then
-                    
+                if context.other_card:is_suit("Clubs") then                    
                     card.ability.extra.Mult = card.ability.extra.Mult * card.ability.extra.BaseXMultGain
                     G.E_MANAGER:add_event(Event({
                         trigger = 'After',
