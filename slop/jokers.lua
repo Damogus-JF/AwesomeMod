@@ -39,8 +39,7 @@ SMODS.Joker {
                 message = localize{type = 'variable', key = 'a_xmult_minus', vars = { card.ability.extra.NegXmult } },
                 colour = G.C.RED
             }
-        end
-        if card.ability.extra.Xmult <= 1.5 then
+        else
             SMODS.destroy_cards(card)
             return {
                 message = 'Empty!',
