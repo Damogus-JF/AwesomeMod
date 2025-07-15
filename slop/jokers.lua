@@ -69,6 +69,7 @@ SMODS.Joker {
             vars = { }
         } 
     end,
+    blueprint_compat = false,
     rarity = 3,
     cost = 8,
     calculate = function (self, card, context)
@@ -119,6 +120,7 @@ SMODS.Joker {
             vars = { card.ability.extra.Xmult }
         } 
     end,
+    blueprint_compat = true,
     rarity = 1,
     cost = 1,
     calculate = function (self, card, context)
@@ -131,7 +133,7 @@ SMODS.Joker {
             else
                 return {
                     message = 'Why?',
-                    colour = G.C.YELLOW,
+                    colour = G.C.attention,
                     sound = 'Aw_JeffyWhy'
                 }
             end
@@ -155,6 +157,7 @@ SMODS.Joker {
             vars = {card.ability.extra.Xmult, (G.GAME.probabilities.normal or 1), card.ability.extra.odds, card.ability.extra.NegXmult}
         }
     end,
+    blueprint_compat = true,
     rarity = 1,
     cost = 6,
     calculate = function (self, card, context)
@@ -190,18 +193,19 @@ SMODS.Joker {
     loc_txt = {
         name = 'J*b application',
         text = {
-            '{X:mult,C:white}X#2#{} Mult for every {C:money}$5{}',
+            '{X:mult,C:white}X#2#{} Mult for every {C:money}$ of interest{}',
             'Earn no {C:money}interest{} at end of round',
             '{C:inactive}(Currently {X:mult,C:white}X#1#{} {C:inactive}Mult){}',
         }
     },
     atlas = 'AwesomeAtlas', pos = {x=1, y=1},
-    config = { extra = {Xmult = 1, Gain = 0.2, incomelastround = 0} },
+    config = { extra = {Xmult = 1, Gain = 0.3, incomelastround = 0} },
     loc_vars = function (self, info_queue, card)
         return {
             vars = {card.ability.extra.Xmult, card.ability.extra.Gain, card.ability.extra.incomelastround}
         }
     end,
+    blueprint_compat = true,
     rarity = 2,
     cost = 6,
     calculate = function (self, card, context)
