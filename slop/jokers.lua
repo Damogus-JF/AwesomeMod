@@ -22,7 +22,7 @@ SMODS.Joker {
         } 
     end,
     rarity = 2,
-    cost = 7,
+    cost = 6,
     blueprint_compat = true,
     eternal_compat = false,
     perishable_compat = true,
@@ -40,7 +40,7 @@ SMODS.Joker {
                 colour = G.C.RED
             }
         end
-        if card.ability.extra.Xmult <= 1 then
+        if card.ability.extra.Xmult <= 1.5 then
             SMODS.destroy_cards(card)
             return {
                 message = 'Empty!',
