@@ -248,7 +248,7 @@ SMODS.Joker {
         }
     end,
     blueprint_compat = true,
-    rarity = 2,
+    rarity = 3,
     cost = 5,
     calculate = function (self, card, context)
         if context.individual and context.cardarea == G.play and not context.blueprint then
