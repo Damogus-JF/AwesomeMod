@@ -40,7 +40,7 @@ SMODS.Consumable {
                 elseif eligible_card.config.center.rarity == 3 or eligible_card.config.center.rarity == 4 then
                     SMODS.destroy_cards(eligible_card)
                     SMODS.add_card({set = 'Joker', legendary = true, stickers = {'eternal'}})
-
+                    
                 end
                 
                 
