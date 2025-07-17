@@ -193,16 +193,16 @@ SMODS.Joker {
     loc_txt = {
         name = 'J*b application',
         text = {
-            '{X:mult,C:white}X#2#{} Mult for every {C:money}$ of interest{}',
-            'Earn no {C:money}interest{} at end of round',
+            '{X:mult,C:white}X#2#{} Mult for every {C:money}$5 you have',
+            'earn no {C:money}interest{} at end of round',
             '{C:inactive}(Currently {X:mult,C:white}X#1#{} {C:inactive}Mult){}',
         }
     },
     atlas = 'AwesomeAtlas', pos = {x=1, y=1},
-    config = { extra = {Xmult = 1, Gain = 0.3, incomelastround = 0} },
+    config = { extra = {Xmult = 1, Gain = 0.2} },
     loc_vars = function (self, info_queue, card)
         return {
-            vars = {card.ability.extra.Xmult, card.ability.extra.Gain, card.ability.extra.incomelastround}
+            vars = {1 + (card.ability.extra.Gain * math.floor((G.GAME.dollars + (G.GAME.dollar_buffer or 0)) / 5)), card.ability.extra.Gain}
         }
     end,
     blueprint_compat = true,
@@ -217,14 +217,12 @@ SMODS.Joker {
             end
             }))
             return{ 
-                Xmult_mod = card.ability.extra.Xmult,
-                message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult } }
+                Xmult_mod = 1 + (card.ability.extra.Gain * math.floor((G.GAME.dollars + (G.GAME.dollar_buffer or 0)) / 5)),
+                message = localize { type = 'variable', key = 'a_xmult', vars = { Xmult_mod } }
             }
         end
     end,
     calc_dollar_bonus = function (self, card)
-        card.ability.extra.Xmult = 1 + card.ability.extra.Gain * card.ability.extra.incomelastround
-        card.ability.extra.incomelastround = 1 * (G.GAME.interest_cap / 5)
         G.GAME.interest_amount = 0
     end
 }
