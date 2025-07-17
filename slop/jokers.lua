@@ -206,8 +206,8 @@ SMODS.Joker {
         }
     end,
     blueprint_compat = true,
-    rarity = 2,
-    cost = 6,
+    rarity = 3,
+    cost = 8,
     calculate = function (self, card, context)
         if context.joker_main then
         G.E_MANAGER:add_event(Event({
@@ -276,7 +276,7 @@ SMODS.Joker {
         if context.joker_main then 
             return{ 
                     mult = card.ability.extra.Mult,
-                    message = localize { type = 'variable', key = 'a_mult', vars = { card.ability.extra.Mult } }
+
             }
         end
     end
