@@ -2,7 +2,7 @@
 	"id": "awesome",
 	"name": "AwesomeMod",
 	"display_name": "Awesome Mod",
-	"author": ["Jacob F, Caden F, Balatro discord"],
+	"author": ["TurkeyTheSqrl, Cadekid, Balatro Discord"],
 	"description": "Awesome sauce",
 	"prefix": "Aw",
 	"main_file": "awesome.lua",
