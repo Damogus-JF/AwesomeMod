@@ -11,7 +11,7 @@ SMODS.Consumable {
     loc_txt = {
         name = 'Upvote',
         text = {
-            'Upgrade the rarity of a random Joker',
+            'Upgrades the rarity of a random Joker',
             'Give it eternal'
         }
     },
@@ -19,9 +19,9 @@ SMODS.Consumable {
     use = function (self, info_queue, card)
         local noneternaljokers = {}
         for _, joker in ipairs(G.jokers.cards) do
-        if not joker.ability.eternal then
-            noneternaljokers[#noneternaljokers + 1] = joker
-        end
+            if not joker.ability.eternal then
+                noneternaljokers[#noneternaljokers + 1] = joker
+            end
         end
         G.E_MANAGER:add_event(Event({
             trigger = 'after',
@@ -37,10 +37,13 @@ SMODS.Consumable {
                     SMODS.destroy_cards(eligible_card)
                     SMODS.add_card({set = 'Joker', rarity = 'Rare', stickers = {'eternal'}})
                     
-                elseif eligible_card.config.center.rarity == 3 or eligible_card.config.center.rarity == 4 then
+                elseif eligible_card.config.center.rarity == 3 then
                     SMODS.destroy_cards(eligible_card)
                     SMODS.add_card({set = 'Joker', legendary = true, stickers = {'eternal'}})
                     
+                elseif eligible_card.config.center.rarity == 4 then
+                    SMODS.destroy_cards(eligible_card)
+                    SMODS.add_card({key = 'j_chicot', stickers = {'eternal'}})
                 end
                 
                 
