@@ -226,6 +226,7 @@ SMODS.Joker {
         G.GAME.interest_amount = 0
     end
 }
+
 SMODS.Joker {
     key = 'BearFive',
     loc_txt = {
@@ -259,24 +260,23 @@ SMODS.Joker {
                         return true
                     end
                 }))
-                if context.other_card:is_suit("Clubs") then                    
-                    card.ability.extra.Mult = card.ability.extra.Mult * card.ability.extra.BaseXMultGain
-                    G.E_MANAGER:add_event(Event({
-                        trigger = 'After',
-                        delay = 0.4,
+            if context.other_card:is_suit("Clubs") then                    
+                G.E_MANAGER:add_event(Event({
+                    SMODS.destroy_cards(context.other_card),
                     func = function()
-                        SMODS.destroy_cards(context.other_card)
+                        card:juice_up(0.3,0.4)
+                        card.ability.extra.Mult = card.ability.extra.Mult * 2
                         return true
                     end
                 }))
+
+                
             end
             end
-            
         end
         if context.joker_main then 
             return{ 
-                    mult = card.ability.extra.Mult,
-
+                    mult = card.ability.extra.Mult
             }
         end
     end
