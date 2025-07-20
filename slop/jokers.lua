@@ -55,6 +55,42 @@ SMODS.Joker {
 }
 
 SMODS.Joker {
+    key = 'Chuckler',
+    loc_txt = {
+        name = 'The Chuckler',
+        text = {
+            '{C:chips}+#1#{} Chips for',
+            'each {C:attention}Joker{} card',
+            '{C:inactive}(Currently {C:chips}+#2#{} {C:inactive}Chips){}',
+        }
+    },
+    atlas = 'AwesomeAtlas', pos = { x = 4, y = 1},
+    config = { extra = { chipbonus = 40}},
+    loc_vars = function (self, info_queue, card) 
+        return {
+            vars = {card.ability.extra.chipbonus, (G.jokers and G.jokers.cards and #G.jokers.cards or 0)*card.ability.extra.chipbonus}
+        }
+    end,
+    rarity = 2,
+    cost = 6,
+    blueprint_compat = true,
+    calculate = function(self, card, context)
+        
+        if context.joker_main then
+            local x = 0
+            for i = 1, #G.jokers.cards do
+                if G.jokers.cards[i].ability.set == 'Joker' then x = x + 1 end
+            end
+            return {
+                message = localize{type='variable',key='a_chips',vars={x*card.ability.extra.chipbonus}},
+                chip_mod = x*card.ability.extra.chipbonus
+            }
+
+        end
+    end
+}
+
+SMODS.Joker {
     key = 'Chud',
     loc_txt = {
         name = 'Chud',
@@ -105,6 +141,7 @@ SMODS.Joker {
         end
     end
 }
+
 SMODS.Joker {
     key = 'Jeffy',
     loc_txt = {
@@ -142,6 +179,7 @@ SMODS.Joker {
         end
     end
 }
+
 SMODS.Joker {
     key = 'RussianRoulette',
     loc_txt = {
@@ -190,6 +228,7 @@ SMODS.Joker {
         end
     end
 }
+
 SMODS.Joker {
     key = 'Job',
     loc_txt = {
@@ -265,7 +304,6 @@ SMODS.Joker {
                 
                 card.ability.extra.Mult = card.ability.extra.Mult * 2
                 return { 
-                    message = localize('k_upgrade_ex'),
                     extra = {focus = card, colour = G.C.MULT, message = 'Doubled!'},
                     focus = card
                 }
