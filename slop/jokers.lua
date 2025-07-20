@@ -70,8 +70,8 @@ SMODS.Joker {
         } 
     end,
     blueprint_compat = false,
-    rarity = 3,
-    cost = 8,
+    rarity = 2,
+    cost = 7,
     calculate = function (self, card, context)
         if context.end_of_round and context.game_over == false and not context.repetition then
             local mypos = nil
