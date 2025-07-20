@@ -36,17 +36,19 @@ SMODS.Joker {
         end
         if context.after and context.main_eval == true and not context.repetition and not context.blueprint then
             card.ability.extra.Xmult = card.ability.extra.Xmult - card.ability.extra.NegXmult
-            return {
-                message = localize{type = 'variable', key = 'a_xmult_minus', vars = { card.ability.extra.NegXmult } },
-                colour = G.C.RED
-            }
-        end
-        if card.ability.extra.Xmult <= 1 and not context.blueprint then
-            SMODS.destroy_cards(card)
-            return {
-                message = 'Empty!',
-                colour = G.C.FILTER
-            }
+            if card.ability.extra.Xmult <= 1 then
+                SMODS.destroy_cards(card)
+                return {
+                    message = 'Empty!',
+                    colour = G.C.MULT
+                }
+            
+            else
+                return {
+                    message = localize{type = 'variable', key = 'a_xmult_minus', vars = { card.ability.extra.NegXmult } },
+                    colour = G.C.RED
+                }
+            end
             
         end
     end
