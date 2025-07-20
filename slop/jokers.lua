@@ -248,31 +248,43 @@ SMODS.Joker {
     end,
     blueprint_compat = true,
     rarity = 3,
-    cost = 5,
+    cost = 10,
     calculate = function (self, card, context)
         if context.individual and context.cardarea == G.play and not context.blueprint then
-            if context.other_card:get_id() == 5 then
-                
-                G.E_MANAGER:add_event(Event({
-                    func = function()
-                        card:juice_up(0.3,0.4)
-                        card.ability.extra.Mult = card.ability.extra.Mult + card.ability.extra.BaseMultGain
-                        return true
-                    end
-                }))
             if context.other_card:is_suit("Clubs") then                    
                 G.E_MANAGER:add_event(Event({
                     SMODS.destroy_cards(context.other_card),
                     func = function()
                         card:juice_up(0.3,0.4)
-                        card.ability.extra.Mult = card.ability.extra.Mult * 2
                         return true
                     end
                 }))
-
                 
+                
+                card.ability.extra.Mult = card.ability.extra.Mult * 2
+                return { 
+                    message = localize('k_upgrade_ex'),
+                    extra = {focus = card, colour = G.C.MULT, message = 'Doubled!'},
+                    focus = card
+                }
             end
+            if context.other_card:get_id() == 5 then
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        card:juice_up(0.3,0.4)
+                        return true
+                    end
+                }))
+                card.ability.extra.Mult = card.ability.extra.Mult + card.ability.extra.BaseMultGain
+                return {
+                    
+                    message = localize('k_upgrade_ex'),
+                    extra = {focus = card, colour = G.C.MULT, message = localize{type='variable',key='a_mult',vars={card.ability.extra.BaseMultGain}}},
+                    focus = card
+                }
             end
+            
+            
         end
         if context.joker_main then 
             return{ 
