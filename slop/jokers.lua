@@ -34,6 +34,7 @@ SMODS.Joker {
                 message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult } }
             }
         end
+        --Amogus hehe
         if context.after and context.main_eval == true and not context.repetition and not context.blueprint then
             card.ability.extra.Xmult = card.ability.extra.Xmult - card.ability.extra.NegXmult
             if card.ability.extra.Xmult <= 1 then
