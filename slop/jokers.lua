@@ -334,3 +334,63 @@ SMODS.Joker {
         end
     end
 }
+
+SMODS.Joker {  
+    key = 'nikooneshot',
+    loc_txt = {
+        name = 'Niko',
+        text = {
+            'This Joker gains {X:mult,C:white}X#1#{} Mult{} whenever',
+            'you {C:dark_edition}oneshot{} a blind, up to {X:mult,C:white}X4{} Mult{}',
+            'resets upon failing to do so',
+            '{C:inactive}(Currently {X:mult,C:white}X#1#{} {C:inactive}Mult{}',
+        }
+    },
+    config = { extra = {CurrentMult = 1,MultBonus = 1}},
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {card.ability.extra.CurrentMult,card.ability.extra.MultBonus}
+        }
+    end,
+    atlas = 'AwesomeAtlas', pos = {x=1, y=2}, soul_pos = {x=2,y=2},
+    blueprint_compat = true,
+    rarity = 4,
+    cost = 20,
+    calculate = function (self, card, context)
+        if context.end_of_round and not context.repetition and context.game_over == false and not context.blueprint then
+            if G.GAME.current_round.hands_played == 1 and not context.blueprint and not card.ability.extra.CurrentMult == 4 then
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        card:juice_up(0.3,0.4)
+                        return true
+                    end
+                }))
+                card.ability.extra.CurrentMult = card.ability.extra.CurrentMult + 1
+                return {
+                    message = localize{type = 'variable', key = 'a_xmult', vars = { card.ability.extra.MultBonus } },
+                    colour = G.C.FILTER
+                }
+            end
+            else if card.ability.extra.CurrentMult == 4 then
+                return { 
+                    extra = {focus = card, colour = G.C.MULT, message = 'Capped!'},
+                    focus = card
+                }
+            else
+                card.ability.extra.CurrentMult = 1
+                return{
+                    message = localize('k_reset'),
+                    colour = G.C.RED
+                }
+            end
+            card.ability.extra.CurrentMult = card.ability.extra.CurrentMult + 1
+        end
+        if context.joker_main then
+            return {
+                Xmult_mod = card.ability.extra.CurrentMult,
+                message = localize{type = 'variable', key = 'a_xmult', vars = { card.ability.extra.CurrentMult}}
+            }
+        end
+        
+    end
+}
