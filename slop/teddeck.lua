@@ -12,8 +12,8 @@ SMODS.Back{
     loc_txt = {
         name = 'Ted Deck',
         text = {
-            "Start with an Eternal",
-            "Riff-Raff",
+            "Start with an",
+            "{C:tarot}Eternal{} {C:attention}Riff-Raff{}",
         },
     },
     apply = function ()
