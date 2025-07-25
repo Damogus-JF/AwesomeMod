@@ -340,8 +340,8 @@ SMODS.Joker {
     loc_txt = {
         name = 'Niko',
         text = {
-            'This Joker gains {X:mult,C:white}X#1#{} Mult{}',
-            'when you {C:dark_edition}oneshot{} a blind', --up to {X:mult,C:white}X4{} Mult{}
+            'This Joker gains {X:mult,C:white}X#1#{} Mult{} when you',
+            '{C:dark_edition}oneshot{} a blind, up to {X:mult,C:white}X5{} Mult{}', 
             'resets upon failing to do so',
             '{C:inactive}(Currently {X:mult,C:white}X#1#{} {C:inactive}Mult){}',
         }
@@ -358,7 +358,12 @@ SMODS.Joker {
     cost = 20,
     calculate = function (self, card, context)
         if context.end_of_round and not context.repetition and context.game_over == false and not context.blueprint then
-            if G.GAME.current_round.hands_played == 1 and not context.blueprint then
+            if G.GAME.current_round.hands_played == 1 and not context.blueprint and card.ability.extra.CurrentMult == 5 then
+                return {
+                    extra = {focus = card, colour = G.C.MULT, message = 'Capped!'},
+                    focus = card
+                }
+            elseif G.GAME.current_round.hands_played == 1 and not context.blueprint then
                 G.E_MANAGER:add_event(Event({
                     func = function()
                         card:juice_up(0.3,0.4)
@@ -373,8 +378,8 @@ SMODS.Joker {
             else
                 card.ability.extra.CurrentMult = 1
                 return{
-                    message = localize('k_reset'),
-                    colour = G.C.RED
+                    extra = {focus = card, colour = G.C.MULT, message = localize('k_reset')},
+                    focus = card
                 }
             end
         end
