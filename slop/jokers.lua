@@ -358,7 +358,7 @@ SMODS.Joker {
     cost = 20,
     calculate = function (self, card, context)
         if context.end_of_round and not context.repetition and context.game_over == false and not context.blueprint then
-            if G.GAME.current_round.hands_played == 1 and not context.blueprint and not card.ability.extra.CurrentMult == 4 then
+            if G.GAME.current_round.hands_played == 1 and not context.blueprint then
                 G.E_MANAGER:add_event(Event({
                     func = function()
                         card:juice_up(0.3,0.4)
@@ -377,7 +377,6 @@ SMODS.Joker {
                     colour = G.C.RED
                 }
             end
-            card.ability.extra.CurrentMult = card.ability.extra.CurrentMult + 1
         end
         if context.joker_main then
             return {
