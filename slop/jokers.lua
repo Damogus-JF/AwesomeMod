@@ -340,10 +340,10 @@ SMODS.Joker {
     loc_txt = {
         name = 'Niko',
         text = {
-            'This Joker gains {X:mult,C:white}X#1#{} Mult{} whenever',
-            'you {C:dark_edition}oneshot{} a blind, up to {X:mult,C:white}X4{} Mult{}',
+            'This Joker gains {X:mult,C:white}X#1#{} Mult{}',
+            'when you {C:dark_edition}oneshot{} a blind', --up to {X:mult,C:white}X4{} Mult{}
             'resets upon failing to do so',
-            '{C:inactive}(Currently {X:mult,C:white}X#1#{} {C:inactive}Mult{}',
+            '{C:inactive}(Currently {X:mult,C:white}X#1#{} {C:inactive}Mult){}',
         }
     },
     config = { extra = {CurrentMult = 1,MultBonus = 1}},
@@ -369,12 +369,6 @@ SMODS.Joker {
                 return {
                     message = localize{type = 'variable', key = 'a_xmult', vars = { card.ability.extra.MultBonus } },
                     colour = G.C.FILTER
-                }
-            end
-            else if card.ability.extra.CurrentMult == 4 then
-                return { 
-                    extra = {focus = card, colour = G.C.MULT, message = 'Capped!'},
-                    focus = card
                 }
             else
                 card.ability.extra.CurrentMult = 1
