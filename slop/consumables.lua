@@ -11,8 +11,8 @@ SMODS.Consumable {
     loc_txt = {
         name = 'Upvote',
         text = {
-            'Upgrades the rarity of a random Joker',
-            'Give it eternal'
+            'Upgrades the rarity of a random Joker,',
+            'then gains {C:tarot}Eternal{}'
         }
     },
     atlas = 'AwesomeAtlasSpectral', pos = {x=0,y=0},
@@ -63,4 +63,38 @@ SMODS.Consumable {
     end
         return next(SMODS.Edition:get_edition_cards(G.jokers, true)) and next(noneternaljokers)
     end
+}
+SMODS.Consumable {
+    set = "Spectral",
+    key = "masha",
+    loc_txt = {
+        name = 'Mash A',
+        text = {
+            "Creates a random {C:attention}skip{} tag"
+        }
+    },
+    cost = 6,
+    atlas = "AwesomeAtlasSpectral", pos = {x=1, y=0},
+
+    can_use = function(self, card)
+		return true
+	end,
+    use = function(self, card, area, copier)
+		local used_consumable = copier or card
+		delay(0.4)
+		G.E_MANAGER:add_event(Event({
+			trigger = "after",
+			delay = 0.2,
+			func = function()
+				play_sound("tarot1")
+				local tag = nil
+				tag = Tag(get_next_tag_key())
+				add_tag(tag)
+				used_consumable:juice_up(0.8, 0.5)
+				return true
+			end,
+		}))
+		delay(1.2)
+    end
+
 }
